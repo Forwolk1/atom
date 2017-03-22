@@ -14,19 +14,33 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 @Path("/chat")
-public class ChatResource {
+public class ChatResource  {
     private ChatDAO chat;
-
+    private UserServiceDAO userservicedao;
     private static final Logger log = LogManager.getLogger(ChatResource.class);
 
     @POST
     @Consumes("application/x-www-form-urlencoded")
     @Path("/login")
     public Response login(@QueryParam("name") String name) {
-
-        chat.login(name);
-        return Response.status(Response.Status.OK).build();
-        log.info("");
+        try {
+            User user = userservicedao.getUserByName(name);
+        } catch (NullPointerException nu) {
+            try {
+                if (name.length()>30) {
+                    throw new RuntimeException("Too long name (longer than 30 symbols)");
+                }
+            } catch (RuntimeException e) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            } finally {
+                chat.login(name);
+                log.info("Success");
+                return Response.status(Response.Status.OK).build();
+            }
+        } finally {
+            log.error("Already loggined");
+            return Response.status(Response.Status.BAD_REQUEST).build();
+    }
 }
 
     @GET
@@ -40,8 +54,24 @@ public class ChatResource {
     @Consumes("application/x-www-form-urlencoded")
     @Path("/say")
     public Response say(@QueryParam("name") String name, @FormParam("msg") String msg) {
-        chat.sendMessage(name, msg);
-        return Response.status(Response.Status.OK).build();
+        try {
+            User user = userservicedao.getUserByName(name);
+        } catch (NullPointerException nu) {
+            log.error("Not logined");
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } finally {
+            try {
+                if (msg.length()>140) {
+                    throw new RuntimeException("Too long message (longer than 140 symbols)");
+                }
+            } catch (RuntimeException e) {
+                return Response.status(Response.Status.BAD_REQUEST).build();
+            } finally {
+                chat.sendMessage(name, msg);
+                log.info("Success");
+                return Response.status(Response.Status.OK).build();
+            }
+        }
     }
 
     @GET
