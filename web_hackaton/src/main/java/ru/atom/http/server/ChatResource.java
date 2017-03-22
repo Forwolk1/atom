@@ -15,15 +15,18 @@ import javax.ws.rs.core.Response;
 
 @Path("/chat")
 public class ChatResource {
-    private LoggerDAO logger;
+    private ChatDAO chat;
     private static final Logger log = LogManager.getLogger(ChatResource.class);
 
     @POST
     @Consumes("application/x-www-form-urlencoded")
     @Path("/login")
     public Response login(@QueryParam("name") String name) {
-        return Response.status(Response.Status.NO_CONTENT).build();
-    }
+
+        chat.login(name);
+        return Response.status(Response.Status.OK).build();
+        log.info("");
+}
 
     @GET
     @Produces("text/plain")
@@ -36,8 +39,8 @@ public class ChatResource {
     @Consumes("application/x-www-form-urlencoded")
     @Path("/say")
     public Response say(@QueryParam("name") String name, @FormParam("msg") String msg) {
-        logger.sendMessage(String name, );
-        return Response.status(Response.Status.NO_CONTENT).build();
+        chat.sendMessage(name, msg);
+        return Response.status(Response.Status.OK).build();
     }
 
     @GET
