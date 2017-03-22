@@ -1,5 +1,7 @@
 package ru.atom.http.server;
 
+import org.eclipse.jetty.util.ConcurrentHashSet;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ public class UserService implements UserServiceDAO {
 
     private UserService () {}
 
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new ConcurrentHashSet<>();
 
     @Override
     public void login(User user) {
