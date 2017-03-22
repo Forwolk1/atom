@@ -40,8 +40,8 @@ public class ChatResource  {
         } finally {
             log.error("Already loggined");
             return Response.status(Response.Status.BAD_REQUEST).build();
+        }
     }
-}
 
     @GET
     @Produces("text/plain")

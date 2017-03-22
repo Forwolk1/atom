@@ -54,7 +54,7 @@ public class ChatUtil implements ChatDAO {
     }
 
     private static void saveToFile(List<Message> list) {
-        File file = new File("/home/pavel/atom.dat");
+        File file = new File("~/atom.dat");
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
         try {
