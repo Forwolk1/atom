@@ -1,8 +1,9 @@
 package ru.atom.http.server;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Message {
+public class Message implements Serializable{
     private Date stamp;
     private String name;
     private String message;

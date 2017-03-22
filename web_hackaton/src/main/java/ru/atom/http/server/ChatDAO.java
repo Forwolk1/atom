@@ -1,5 +1,6 @@
 package ru.atom.http.server;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ChatDAO {
@@ -9,7 +10,7 @@ public interface ChatDAO {
      *
      * @param name имя пользователя
      */
-    void login (String name);
+    void login (String name) throws IOException;
 
     /**
      * Человек пишет в чат
