@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/chat")
 public class ChatResource {
+    private LoggerDAO logger;
     private static final Logger log = LogManager.getLogger(ChatResource.class);
 
     @POST
@@ -35,6 +36,7 @@ public class ChatResource {
     @Consumes("application/x-www-form-urlencoded")
     @Path("/say")
     public Response say(@QueryParam("name") String name, @FormParam("msg") String msg) {
+        logger.sendMessage(String name, );
         return Response.status(Response.Status.NO_CONTENT).build();
     }
 
