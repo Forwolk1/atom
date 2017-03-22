@@ -1,6 +1,8 @@
 package ru.atom.http.server;
 
-public interface LoggerDAO {
+import java.util.List;
+
+public interface ChatDAO {
 
     /**
      * Человек залогинился
@@ -16,4 +18,12 @@ public interface LoggerDAO {
      * @param message сообщение
      */
     void sendMessage (String name, String message);
+
+    /**
+     * Получение списка сообщений
+     *
+     * @param n количество последних сообщений
+     * @return последние n сообщений
+     */
+    List<Message> getMessages (int n);
 }
