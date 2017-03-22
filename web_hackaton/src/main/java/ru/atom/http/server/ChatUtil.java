@@ -5,11 +5,18 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * Created by pavel on 22.03.17.
- */
 public class ChatUtil implements ChatDAO {
     private List<Message> messages = new ArrayList<>();
+
+    private ChatUtil () {}
+
+    private static ChatUtil instance;
+
+    public static ChatUtil getInstance () {
+        if (instance == null)
+            instance = new ChatUtil();
+        return instance;
+    }
 
     @Override
     public void login(String name) throws IOException {
