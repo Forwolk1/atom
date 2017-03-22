@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 @Path("/chat")
 public class ChatResource  {
     private ChatDAO chat;
-    private UserServiceDAO userservicedao;
+    private UserServiceDAO userservicedao = UserService.getInstance();
     private static final Logger log = LogManager.getLogger(ChatResource.class);
 
     @POST
