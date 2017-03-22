@@ -9,13 +9,14 @@ public class UserService implements UserServiceDAO {
 
     private static UserService instance;
 
-    public static UserService getInstance () {
+    public static UserService getInstance() {
         if (instance == null)
             instance = new UserService();
         return instance;
     }
 
-    private UserService () {}
+    private UserService() {
+    }
 
     private Set<User> users = new ConcurrentHashSet<>();
 
@@ -35,7 +36,7 @@ public class UserService implements UserServiceDAO {
             if (u.getName().equalsIgnoreCase(name))
                 return u;
         }
-        throw new NullPointerException("User not found.");
+        return null;
     }
 
     @Override

@@ -23,22 +23,18 @@ public class ChatResource  {
     @Consumes("application/x-www-form-urlencoded")
     @Path("/login")
     public Response login(@QueryParam("name") String name) {
-        try {
-            User user = userservicedao.getUserByName(name);
-        } catch (NullPointerException nu) {
-            try {
-                if (name.length()>30) {
-                    throw new RuntimeException("Too long name (longer than 30 symbols)");
-                }
-            } catch (RuntimeException e) {
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            } finally {
-                chat.login(name);
-                log.info("Success");
-                return Response.status(Response.Status.OK).build();
+        User user = userservicedao.getUserByName(name);
+        if (user == null) {
+            User user1 = new User(name, null);
+            if (name.length()>30) {
+                return Response.ok("So much length").build();
             }
-        } finally {
-            log.error("Already loggined");
+            chat.login(name);
+            userservicedao.login(user1);
+            log.info("User loggined");
+            return Response.ok("User " + name + " was loggined").build();
+        } else {
+            log.info("User already loggined");
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }

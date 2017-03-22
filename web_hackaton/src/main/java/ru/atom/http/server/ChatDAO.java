@@ -10,7 +10,7 @@ public interface ChatDAO {
      *
      * @param name имя пользователя
      */
-    void login (String name) throws IOException;
+    void login (String name);
 
     /**
      * Человек пишет в чат

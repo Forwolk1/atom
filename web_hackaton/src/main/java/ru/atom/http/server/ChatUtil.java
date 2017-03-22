@@ -19,7 +19,7 @@ public class ChatUtil implements ChatDAO {
     }
 
     @Override
-    public void login(String name) throws IOException {
+    public void login(String name) {
         Date currDate = Calendar.getInstance().getTime();
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd hh-mm-ss");
         String strDate = format.format(currDate);
